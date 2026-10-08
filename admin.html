@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin | Batalha da Alcatéia</title>
+<style>
+:root {
+  --blue: #087cff;
+  --red: #ef233c;
+  --bg: #090b10;
+  --card: #151923;
+  --text: #f4f6fb;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+header {
+  padding: 24px 16px;
+  text-align: center;
+  background: linear-gradient(110deg, #063d86, #111, #970d20);
+  border-bottom: 3px solid var(--red);
+}
+header h1 { margin: 0 0 8px; font-size: 24px; }
+header p { margin: 0; color: #ddd; }
+main {
+  max-width: 760px;
+  margin: auto;
+  padding: 18px;
+}
+.card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #303747;
+}
+h2 { font-size: 20px; margin-top: 0; }
+label {
+  display: block;
+  margin: 14px 0 6px;
+  font-size: 14px;
+}
+input, textarea, select {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border-radius: 7px;
+  border: 1px solid #444b5b;
+  background: #0b0e15;
+  color: white;
+  font-size: 16px;
+}
+textarea { min-height: 90px; resize: vertical; }
+button, .link {
+  display: inline-block;
+  border: 0;
+  border-radius: 7px;
+  padding: 12px 16px;
+  font-weight: bold;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 12px;
+}
+.primary { background: var(--blue); color: white; }
+.danger { background: var(--red); color: white; }
+.secondary { background: #343b4b; color: white; }
+button:disabled { opacity: .5; }
+.note {
+  color: #bdc6d8;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.status { white-space: pre-wrap; color: #91d5ff; }
+#painel { display: none; }
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+nav button { margin: 0; }
+.item {
+  padding: 12px;
+  border-bottom: 1px solid #343b4b;
+  overflow-wrap: anywhere;
+}
+.item strong { display: block; }
+footer { text-align: center; padding: 22px; color: #8992a4; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🐺 BATALHA DA ALCATÉIA</h1>
+  <p>Painel administrativo • Parintins - AM</p>
+</header>
+
+<main>
+  <section class="card" id="login">
+    <h2>🔐 Acesso administrativo</h2>
+    <p class="note">
+      Entre com sua conta administrativa do Supabase.
+      Este painel não usa uma senha fixa no código.
+    </p>
+
+    <form id="loginForm">
+      <label for="email">E-mail cadastrado</label>
+      <input id="email" type="email" autocomplete="username"
+        required placeholder="Seu e-mail">
+
+      <label for="password">Senha</label>
+      <input id="password" type="password"
+        autocomplete="current-password" required
+        placeholder="Sua senha">
+
+      <button class="primary" type="submit">Entrar</button>
+    </form>
+    <p id="loginStatus" class="status" role="status"></p>
+  </section>
+
+  <section id="painel">
+    <div class="card">
+      <h2>Bem-vindo à administração!</h2>
+      <p class="note">
+        Área preparada para organizar o site.
+        As operações de cadastro serão ativadas após
+        configurar as tabelas e permissões do banco de dados.
+      </p>
+      <button id="logout" class="danger">Sair da conta</button>
+    </div>
+
+    <nav aria-label="Seções administrativas">
+      <button class="secondary" data-section="eventos">Eventos</button>
+      <button class="secondary" data-section="mcs">MCs</button>
+      <button class="secondary" data-section="ranking">Ranking</button>
+    </nav>
+
+    <section class="card" id="eventos">
+      <h2>📅 Próximo evento</h2>
+      <form id="eventForm">
+        <label for="eventName">Nome do evento</label>
+        <input id="eventName" required placeholder="Ex.: Edição Bate-Volta">
+
+        <label for="eventDate">Data</label>
+        <input id="eventDate" type="date" required>
+
+        <label for="eventTime">Horário</label>
+        <input id="eventTime" type="time" required>
+
+        <label for="eventPlace">Local</label>
+        <input id="eventPlace" required placeholder="Local da batalha">
+
+        <label for="eventDescription">Descrição</label>
+        <textarea id="eventDescription"
+          placeholder="Informações adicionais"></textarea>
+
+        <button class="primary" type="submit">Cadastrar evento</button>
+      </form>
+      <p class="note">
+        Formulário visual: salvar no banco será habilitado
+        depois da configuração do Supabase.
+      </p>
+    </section>
+
+    <section class="card" id="mcs">
+      <h2>🎤 Cadastro de MCs</h2>
+      <form id="mcForm">
+        <label for="mcName">Nome artístico</label>
+        <input id="mcName" required placeholder="Nome do MC">
+
+        <label for="mcPhoto">Link da foto</label>
+        <input id="mcPhoto" type="url" placeholder="https://...">
+
+        <label for="mcInstagram">Instagram</label>
+        <input id="mcInstagram" placeholder="@usuario">
+
+        <label for="mcBio">Biografia</label>
+        <textarea id="mcBio" placeholder="História do MC"></textarea>
+
+        <button class="primary" type="submit">Cadastrar MC</button>
+      </form>
+    </section>
+
+    <section class="card" id="ranking">
+      <h2>🏆 Atualizar pontuação</h2>
+      <form id="scoreForm">
+        <label for="scoreMc">Nome do MC</label>
+        <input id="scoreMc" required placeholder="Nome artístico">
+
+        <label for="scorePoints">Pontos a adicionar</label>
+        <input id="scorePoints" type="number" required
+          min="0" step="1" value="3">
+
+        <label for="scoreReason">Motivo</label>
+        <select id="scoreReason">
+          <option value="Primeira fase">Vitória na primeira fase</option>
+          <option value="Semifinal">Vitória na semifinal</option>
+          <option value="Final">Vitória na final</option>
+          <option value="2x0">Vitória por 2 a 0</option>
+          <option value="Outro">Outro</option>
+        </select>
+
+        <button class="primary" type="submit">Registrar pontuação</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Estado da conexão</h2>
+      <p id="connectionStatus" class="status">
+        Aguardando configuração do Supabase.
+      </p>
+    </section>
+  </section>
+</main>
+
+<footer>Batalha da Alcatéia • Parintins, Amazonas</footer>
+
+<script type="module">
+const loginForm = document.getElementById("loginForm");
+const loginStatus = document.getElementById("loginStatus");
+const painel = document.getElementById("painel");
+const login = document.getElementById("login");
+const connectionStatus = document.getElementById("connectionStatus");
+
+let supabase = null;
+
+function showMessage(message) {
+  loginStatus.textContent = message;
+}
+
+function updateScreen(session) {
+  login.style.display = session ? "none" : "block";
+  painel.style.display = session ? "block" : "none";
+}
+
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  showMessage("Verificando acesso...");
+
+  try {
+    if (!supabase) {
+      showMessage(
+        "Supabase ainda não configurado. Primeiro precisamos conectar o projeto e configurar as permissões."
+      );
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: document.getElementById("email").value.trim(),
+      password: document.getElementById("password").value
+    });
+
+    if (error) throw error;
+    updateScreen(data.session);
+    showMessage("");
+  } catch (error) {
+    showMessage("Não foi possível entrar: " + error.message);
+  }
+});
+
+document.getElementById("logout").addEventListener("click", async () => {
+  if (supabase) await supabase.auth.signOut();
+  updateScreen(null);
+});
+
+document.querySelectorAll("[data-section]").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.getElementById(button.dataset.section)
+      .scrollIntoView({ behavior: "smooth" });
+  });
+});
+
+["eventForm", "mcForm", "scoreForm"].forEach((id) => {
+  document.getElementById(id).addEventListener("submit", (event) => {
+    event.preventDefault();
+    alert(
+      "O formulário ainda não está conectado ao banco. " +
+      "Precisamos configurar o Supabase antes de salvar os dados."
+    );
+  });
+});
+
+connectionStatus.textContent =
+  "Supabase não configurado. O painel é apenas a interface inicial; " +
+  "login, cadastros e ranking ainda não salvam informações.";
+</script>
+
+</body>
+</html>
