@@ -4,8 +4,8 @@ import { createClient } from
 
 // 1. CONFIGURAÇÃO DO SUPABASE
 // Substitua pelos dados do seu próprio projeto.
-const SUPABASE_URL = "COLE_A_URL_DO_SEU_PROJETO";
-const SUPABASE_ANON_KEY = "COLE_SUA_CHAVE_PUBLICA_ANON";
+const SUPABASE_URL = "https://xrvefgqycejiuokdmfio.supabase.co/rest/v1/";
+const SUPABASE_ANON_KEY = "sb_publishable_iCYF-r1R-VVcVHvlFJkxWg_R-urdYYA";
 
 let supabase = null;
 
