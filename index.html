@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batalha da Alcatéia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --preto: #0b0b0b; --branco: #f4f4f4; --azul: #0056b3;
+            --vermelho: #d32f2f; --verde-classificado: #1b5e20;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background:#0b0b0b; color:var(--branco); font-family:'Montserrat',sans-serif;
+            background-image:radial-gradient(circle,#1a1a1a 10%,#0b0b0b 90%); overflow-x:hidden;
+        }
+        .papel-textura { background:#111; border:2px dashed rgba(255,255,255,.15); position:relative; }
+        .papel-textura::before { content:""; position:absolute; inset:0; background:url('https://www.transparenttextures.com/patterns/natural-paper.png'); opacity:.12; pointer-events:none; }
+        header { text-align:center; padding:40px 20px; border-bottom:4px solid var(--vermelho); background:linear-gradient(to bottom,#000,#111); }
+        header h1 { font-size:3rem; font-weight:900; text-transform:uppercase; letter-spacing:2px; text-shadow:3px 3px var(--vermelho),-3px -3px var(--azul); }
+        nav { display:flex; justify-content:center; gap:15px; background:#050505; padding:15px; flex-wrap:wrap; border-bottom:2px solid var(--azul); position:sticky; top:0; z-index:1000; }
+        nav a { color:#fff; text-decoration:none; font-weight:700; padding:8px 15px; border-radius:4px; background:#1a1a1a; border:1px solid rgba(255,255,255,.1); transition:.3s; }
+        nav a:hover { background:var(--vermelho); }
+        .container { max-width:1200px; margin:30px auto; padding:0 20px; }
+        section { margin-bottom:50px; padding:30px; border-radius:8px; }
+        h2 { font-size:2rem; margin-bottom:20px; text-transform:uppercase; border-left:6px solid var(--azul); padding-left:15px; }
+        .destaque-evento { background:linear-gradient(135deg,#111,#1e0505); border:3px solid var(--vermelho); text-align:center; padding:40px; border-radius:12px; box-shadow:0 0 20px rgba(211,47,47,.4); }
+        .destaque-evento h3 { font-size:2.5rem; color:var(--vermelho); margin-bottom:15px; }
+        .info-batalha { font-size:1.2rem; margin:10px 0; color:#ccc; }
+        .bio-box { font-size:1.1rem; line-height:1.6; color:#ddd; }
+        .ultimo-campeao { display:flex; flex-direction:column; align-items:center; text-align:center; background:#141414; border:2px solid var(--azul); padding:30px; border-radius:10px; }
+        .ultimo-campeao img { width:220px; height:280px; object-fit:cover; border-radius:8px; border:4px solid var(--azul); margin-bottom:15px; box-shadow:0 0 15px rgba(0,86,179,.5); }
+        .ranking-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; }
+        .card-mc { background:#161616; border-radius:8px; padding:20px; border:1px solid #333; display:flex; gap:15px; position:relative; overflow:hidden; transition:transform .3s; }
+        .card-mc:hover { transform:translateY(-5px); }
+        @keyframes brilhoDourado { 0%{border-color:#ffd700;box-shadow:0 0 10px #ffd700}50%{border-color:#ffea75;box-shadow:0 0 25px #ffaa00}100%{border-color:#ffd700;box-shadow:0 0 10px #ffd700} }
+        @keyframes brilhoPrata { 0%{border-color:#e0e0e0;box-shadow:0 0 10px #ccc}50%{border-color:#fff;box-shadow:0 0 20px #888}100%{border-color:#e0e0e0;box-shadow:0 0 10px #ccc} }
+        @keyframes brilhoBronze { 0%{border-color:#cd7f32;box-shadow:0 0 10px #cd7f32}50%{border-color:#f4a460;box-shadow:0 0 20px #a0522d}100%{border-color:#cd7f32;box-shadow:0 0 10px #cd7f32} }
+        .pos-1{border:3px solid #ffd700;animation:brilhoDourado 3s infinite;background:linear-gradient(135deg,#1f1b0c,#161616)}
+        .pos-2{border:3px solid #e0e0e0;animation:brilhoPrata 3s infinite;background:linear-gradient(135deg,#151718,#161616)}
+        .pos-3{border:3px solid #cd7f32;animation:brilhoBronze 3s infinite;background:linear-gradient(135deg,#1a120c,#161616)}
+        .pos-classificado{border-left:5px solid var(--azul)} .pos-normal{border-left:5px solid #444}
+        .card-mc img { width:90px; height:120px; object-fit:cover; border-radius:6px; }
+        .card-info h4 { font-size:1.1rem; color:#fff; margin-bottom:5px; }
+        .card-info p { font-size:.85rem; color:#aaa; margin-bottom:4px; }
+        .tag-status { display:inline-block; font-size:.75rem; padding:2px 6px; border-radius:3px; margin-top:5px; font-weight:bold; }
+        .tag-classificado { background:var(--verde-classificado); color:#fff; }
+        .btn-insta { display:inline-block; margin-top:8px; font-size:.8rem; color:#fff; background:#e1306c; padding:4px 8px; border-radius:4px; text-decoration:none; }
+        .regras-box { background:#111; border-left:4px solid var(--vermelho); padding:20px; font-size:.95rem; line-height:1.6; }
+        .regras-box ul { list-style:square; margin-left:20px; color:#ccc; }
+        .curiosidades-grid,.membros-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+        .card-curiosidade { background:#151515; border:1px solid #333; padding:20px; border-radius:8px; text-align:center; }
+        .card-curiosidade img { width:100px; height:100px; border-radius:50%; object-fit:cover; margin-bottom:10px; border:2px solid var(--vermelho); }
+        .card-curiosidade h4 { color:var(--vermelho); margin-bottom:8px; font-size:1rem; text-transform:uppercase; }
+        .membro-card { background:#161616; border:1px solid #222; border-radius:8px; padding:15px; text-align:center; }
+        .membro-card img { width:100%; height:220px; object-fit:cover; border-radius:6px; margin-bottom:10px; }
+        .rima-box { background:#0a0a0a; padding:8px; font-style:italic; font-size:.85rem; border-left:2px solid var(--azul); margin-top:10px; color:#b0bec5; }
+        .apoio-grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+        .box-pix,.box-parcerias { background:#141414; padding:25px; border-radius:8px; border:1px solid #333; text-align:center; }
+        .box-pix input { padding:10px; width:80%; background:#050505; border:1px solid #444; color:#fff; border-radius:4px; margin-top:10px; text-align:center; }
+        footer { text-align:center; padding:30px; background:#050505; color:#777; border-top:2px solid #222; font-size:.9rem; }
+        @media(max-width:768px){ .apoio-grid{grid-template-columns:1fr} header h1{font-size:2.2rem} .destaque-evento h3{font-size:1.8rem} }
+    </style>
+</head>
+<body>
+<header><h1>Batalha da Alcatéia</h1></header>
+<nav>
+<a href="#inicio">Início</a><a href="#evento">Próximo Evento</a><a href="#ranking">Ranking</a>
+<a href="#curiosidades">Curiosidades</a><a href="#membros">MCs Cadastrados</a><a href="#apoio">Apoio & Pix</a>
+</nav>
+<div class="container">
+<section id="evento" class="destaque-evento">
+<h3>🔥 Próxima Batalha & Evento Oficial</h3>
+<div class="info-batalha"><strong>Data:</strong> Sábado, 15 de Outubro de 2026</div>
+<div class="info-batalha"><strong>Horário:</strong> 18:00h</div>
+<div class="info-batalha"><strong>Local:</strong> Praça Central - Parintins/AM (<a href="https://maps.google.com" target="_blank" style="color:var(--azul);text-decoration:underline">Ver no Maps</a>)</div>
+<p style="margin-top:15px;color:#ddd">Venha prestigiar a cena do freestyle local e colar com a Alcateia!</p>
+</section>
+
+<section id="inicio" class="papel-textura"><h2>Biografia</h2><div class="bio-box">[Inserir texto da história da Batalha da Alcatéia, sua fundação, missão de fortalecer o cenário do improviso e dar voz aos MCs da região amazônica.]</div></section>
+
+<section class="papel-textura">
+<h2>Campeão da Última Edição</h2><div class="ultimo-campeao">
+<img src="https://via.placeholder.com/220x280?text=FOTO+DO+MC" alt="Campeão da Última Edição">
+<h3 style="color:var(--azul);font-size:1.5rem;margin-top:10px">[NOME DO MC CAMPEÃO]</h3>
+<p style="color:#aaa;margin-top:5px">Reinado absoluto na edição passada.</p>
+<div style="margin-top:15px;background:#0b0b0b;padding:10px;border-radius:6px;width:100%">
+<p style="font-weight:bold">Chaveamento da Batalha Anterior:</p><p style="font-size:.9rem;color:#888">[Inserir imagem ou estrutura do chaveamento da última edição]</p>
+</div></div></section>
+
+<section class="regras-box"><h2>Critérios de Pontuação e Formato</h2><ul>
+<li><strong>Ganhou 1ª Fase:</strong> +2 Pontos</li><li><strong>Ganhou 2ª Fase:</strong> +3 Pontos</li>
+<li><strong>Ganhou Semifinal:</strong> +5 Pontos</li><li><strong>Campeão da Batalha:</strong> +7 Pontos</li><li><strong>Vitória por 2x0:</strong> +2 Pontos extras</li>
+</ul></section>
+
+<section id="ranking" class="papel-textura"><h2>Ranking Atual (Banco de Dados / Vertical)</h2><div class="ranking-grid">
+<div class="card-mc pos-1"><img src="https://via.placeholder.com/90x120?text=MC"><div class="card-info"><h4>1º. [Nome do MC 1]</h4><p>Pts: 45 | Títulos: 4</p><p>Part: 10 | Derrotas: 2</p><p>Twolala: 15% (Aprov.)</p><a href="https://instagram.com" target="_blank" class="btn-insta">Instagram</a></div></div>
+<div class="card-mc pos-2"><img src="https://via.placeholder.com/90x120?text=MC"><div class="card-info"><h4 style="color:#ddd">2º. [Nome do MC 2]</h4><p>Pts: 38 | Títulos: 2</p><p>Part: 9 | Derrotas: 3</p><p>Twolala: 12%</p><a href="https://instagram.com" target="_blank" class="btn-insta">Instagram</a></div></div>
+<div class="card-mc pos-3"><img src="https://via.placeholder.com/90x120?text=MC"><div class="card-info"><h4 style="color:#cd7f32">3º. [Nome do MC 3]</h4><p>Pts: 30 | Títulos: 1</p><p>Part: 8 | Derrotas: 4</p><p>Twolala: 10%</p><a href="https://instagram.com" target="_blank" class="btn-insta">Instagram</a></div></div>
+<div class="card-mc pos-classificado"><img src="https://via.placeholder.com/90x120?text=MC"><div class="card-info"><h4>4º. [Nome do MC 4]</h4><p>Pts: 25 | Part: 7</p><span class="tag-status tag-classificado">Classificado para outros eventos</span><br><a href="https://instagram.com" target="_blank" class="btn-insta">Instagram</a></div></div>
+<div class="card-mc pos-normal"><img src="https://via.placeholder.com/90x120?text=MC"><div class="card-info"><h4>9º. [Nome do MC 9]</h4><p>Pts: 10 | Part: 5</p><a href="https://instagram.com" target="_blank" class="btn-insta">Instagram</a></div></div>
+</div></section>
+
+<section id="curiosidades" class="papel-textura"><h2>Curiosidades & Hall da Fama</h2><div class="curiosidades-grid">
+<div class="card-curiosidade"><img src="https://via.placeholder.com/100?text=Rei"><h4>Rei da Alcatéia</h4><p><b>[Nome do MC]</b></p><p style="font-size:.85rem;color:#aaa;margin-top:5px">Maior campeão da história da batalha.</p></div>
+<div class="card-curiosidade"><img src="https://via.placeholder.com/100?text=Regional"><h4>Campeão Regional</h4><p><b>[Nome do MC]</b></p><p style="font-size:.85rem;color:#aaa;margin-top:5px">Seletiva Regional do Estadual do Amazonas.</p></div>
+<div class="card-curiosidade"><img src="https://via.placeholder.com/100?text=Twolala"><h4>Rei do Twolala</h4><p><b>[Nome do MC]</b></p><p style="font-size:.85rem;color:#aaa;margin-top:5px">Mais Twolalas registrados no ranking.</p></div>
+<div class="card-curiosidade"><img src="https://via.placeholder.com/100?text=Destaque"><h4>Destaque do Ano</h4><p><b>[Nome do MC]</b></p><p style="font-size:.85rem;color:#aaa;margin-top:5px">[Texto breve de justificativa]</p></div>
+<div class="card-curiosidade"><img src="https://via.placeholder.com/100?text=ReiAno"><h4>Rei do Ano</h4><p><b>[Nome do MC]</b></p><p style="font-size:.85rem;color:#aaa;margin-top:5px">[Texto sobre consistência e desempenho]</p></div>
+<div class="card-curiosidade"><img src="https://via.placeholder.com/100?text=CopaCores"><h4>Campeão Copa Cores</h4><p><b>[Nome do MC]</b></p><p style="font-size:.85rem;color:#aaa;margin-top:5px">[Texto explicativo da conquista]</p></div>
+</div></section>
+
+<section id="membros" class="papel-textura"><h2>Cadastro dos MCs (Painel de Atletas)</h2>
+<p style="font-size:.9rem;color:#aaa;margin-bottom:20px">* Espaço flexível e editável a qualquer momento com o perfil completo e a melhor rima de cada MC.</p>
+<div class="membros-grid">
+<div class="membro-card"><img src="https://via.placeholder.com/250x220?text=MC+Foto"><h4>[Nome do MC]</h4><a href="https://instagram.com" target="_blank" class="btn-insta">Instagram</a><p style="font-size:.8rem;color:#aaa"><b>Biografia:</b> Resumo rápido da trajetória nas batalhas.</p><p style="font-size:.8rem;color:#aaa"><b>Títulos:</b> 2x Campeão</p><div class="rima-box">"Aqui a rima é forte, bate de frente e traz o tom, a Alcatéia domina e o freestyle é som bom!"</div></div>
+<div class="membro-card"><img src="https://via.placeholder.com/250x220?text=MC+Foto+2"><h4>[Nome do MC 2]</h4><a href="https://instagram.com" target="_blank" class="btn-insta">Instagram</a><p style="font-size:.8rem;color:#aaa"><b>Biografia:</b> Resumo rápido da trajetória.</p><p style="font-size:.8rem;color:#aaa"><b>Títulos:</b> 1x Campeão</p><div class="rima-box">"Respeita a quebrada, o fluxo não para..."</div></div>
+</div></section>
+
+<section id="apoio" class="apoio-grid">
+<div class="box-pix"><h3 style="color:var(--vermelho);margin-bottom:10px">⚡ Ajude a Batalha (Chave PIX)</h3><p style="font-size:.9rem;color:#ccc;margin-bottom:15px">Contribua para a premiação dos MCs e estrutura do evento!</p><input type="text" value="sua-chave-pix@email.com" readonly onclick="this.select();document.execCommand('copy');alert('Chave PIX copiada!');"><p style="font-size:.75rem;color:#777;margin-top:8px">Clique para copiar a chave PIX</p></div>
+<div class="box-parcerias"><h3 style="color:var(--azul);margin-bottom:10px">🤝 Parcerias & Apoio</h3><p style="font-size:.9rem;color:#ccc;margin-bottom:15px">Empresas e coletivos que fortalecem a Batalha da Alcatéia:</p><div style="display:flex;justify-content:center;gap:15px;font-weight:bold;color:#888"><span>[Logo Parceria 1]</span><span>[Logo Parceria 2]</span><span>[Logo Parceria 3]</span></div></div>
+</section>
+</div>
+<footer><p>&copy; 2026 Batalha da Alcatéia. Todos os direitos reservados.</p></footer>
+</body>
+</html>
