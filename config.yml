@@ -1,0 +1,66 @@
+
+backend:
+  name: github
+  repo: ericksouzamartins969-a11y/Batalha-da-Alcat-ia-Parintins-
+  branch: main
+
+media_folder: "imagens/uploads"
+public_folder: "/imagens/uploads"
+
+locale: "pt"
+
+collections:
+  - name: "eventos"
+    label: "Eventos"
+    folder: "_eventos"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Nome da edição", name: "title", widget: "string" }
+      - { label: "Data", name: "data", widget: "string" }
+      - { label: "Horário", name: "horario", widget: "string" }
+      - { label: "Local", name: "local", widget: "string" }
+      - { label: "Premiação", name: "premiacao", widget: "string", required: false }
+      - { label: "Descrição", name: "descricao", widget: "text", required: false }
+      - { label: "Cartaz", name: "imagem", widget: "image", required: false }
+
+  - name: "mcs"
+    label: "MCs"
+    folder: "_mcs"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Nome artístico", name: "title", widget: "string" }
+      - { label: "Instagram", name: "instagram", widget: "string", required: false }
+      - { label: "Foto", name: "foto", widget: "image", required: false }
+      - { label: "Pontuação", name: "pontos", widget: "number", value_type: "int", default: 0 }
+      - { label: "Histórico", name: "historico", widget: "text", required: false }
+
+  - name: "ranking"
+    label: "Ranking"
+    folder: "_ranking"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "MC", name: "title", widget: "string" }
+      - { label: "Pontos", name: "pontos", widget: "number", value_type: "int", default: 0 }
+      - { label: "Vitórias", name: "vitorias", widget: "number", value_type: "int", default: 0 }
+      - { label: "Observações", name: "observacoes", widget: "text", required: false }
+
+  - name: "noticias"
+    label: "Notícias"
+    folder: "_noticias"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Texto", name: "body", widget: "markdown" }
+      - { label: "Imagem", name: "imagem", widget: "image", required: false }
